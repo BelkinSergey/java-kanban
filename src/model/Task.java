@@ -1,12 +1,12 @@
 package model;
 
 public class Task {
-    private int taskId;
+    private int id;
     private String taskName;
     private String description;
     private Status taskStatus;
     public Task(int taskId, String taskName, String description, Status taskStatus) {
-        this.taskId = taskId;
+        this.id = taskId;
         this.taskName = taskName;
         this.description = description;
         this.taskStatus = taskStatus;
@@ -44,11 +44,11 @@ public class Task {
 
 
     public int getTaskId() {
-        return taskId;
+        return id;
     }
 
     public void setTaskId(int taskId) {
-        this.taskId = taskId;
+        this.id = taskId;
     }
 
 
@@ -57,7 +57,7 @@ public class Task {
         if (this == obj) return true;
         if (obj == null || !getClass().equals(obj.getClass())) return false;
         Task task = (Task) obj;
-        return taskId == task.taskId;
+        return id == task.id;
     }
 
     @Override

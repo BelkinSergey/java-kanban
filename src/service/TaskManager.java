@@ -9,10 +9,10 @@ import java.util.HashMap;
 
 public class TaskManager {
 
-//    ArrayList<Task> tasks;
-    HashMap<Integer, Task> tasks;
-    HashMap<Integer, Epic> epics;
-    HashMap<Integer, Subtask> subtasks;
+
+    private final HashMap<Integer, Task> tasks;
+    private final HashMap<Integer, Epic> epics;
+    private final HashMap<Integer, Subtask> subtasks;
 
 
     int id = 0;
@@ -43,8 +43,14 @@ public class TaskManager {
     }
     public void clearEpics(){
         epics.clear();
-    }    ////////////
+        subtasks.clear();
+    }
     public void clearSubTasks(){
+        for (Subtask subtask: subtasks.values()){
+            Epic epic = subtask.getEpic();
+            epic.removeTask(subtask);
+            epic.updateStatus();
+        }
         subtasks.clear();
     }
 
@@ -116,6 +122,7 @@ public class TaskManager {
             ArrayList<Subtask> subtasksOfEpic = ((Epic)removeTask).getSubtasks();
             for (Subtask subtask: subtasksOfEpic){
                 subtasks.remove(subtask.getTaskId());
+                ((Epic)removeTask).removeTask(subtask);
             }
         }
         if (subtasks.containsKey(id)) {

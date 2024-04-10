@@ -47,16 +47,47 @@ public class Main {
         System.out.println(taskManager.getEpics());
         System.out.println(taskManager.getSubTasks());
 
+//        Удаление всех эпиков
+        taskManager.clearEpics();
+        System.out.println("\nПосле удаления всех эпиков:");
+        System.out.println("Список всех эпиков: " + taskManager.getEpics());
+        System.out.println("Список всех подзадач: " + taskManager.getSubTasks());
 
-// Удаление
+
+//        Удаление всех подзадач
+        System.out.println("\nСписок всех эпиков до удаления подзадач:\n" + taskManager.getEpics());
+        System.out.println("Список всех подзадач до удаления :\n" + taskManager.getSubTasks());
+        taskManager.clearSubTasks();
+        System.out.println("\nПосле удаления всех подзадач:");
+        System.out.println("Список всех эпиков: " + taskManager.getEpics());
+        System.out.println("Список всех подзадач: " + taskManager.getSubTasks());
+        System.out.println("Список всех подзадач эпика epic1: " + epic1.getSubtasks());
+        System.out.println("Список всех подзадач эпика epic2: " + epic2.getSubtasks());
+
+
+
+//      Удаление task1
         taskManager.deleteTaskID(task1.getTaskId());
-        taskManager.deleteTaskID(subtask2.getTaskId());
-        taskManager.deleteTaskID(epic2.getTaskId());
-
-        System.out.println("\nПосле удаления:");
+        System.out.println("\nСписок задач после удаления task1:");
         System.out.println(taskManager.getTasks());
+
+//      Удаление subtask2
+        System.out.println("\nСписок подзадач у epic1 ДО удаления subtask2");
+        System.out.println(epic1.getSubtasks());
+        taskManager.deleteTaskID(subtask2.getTaskId());
+        System.out.println("\nСписок подзадач у epic1 ПОСЛЕ удаления subtask2");
+        System.out.println(epic1.getSubtasks());
+
+
+        System.out.println("\nСписок эпиков ДО удаления epic2:");
         System.out.println(taskManager.getEpics());
+//      Удаление epic2
+        taskManager.deleteTaskID(epic2.getTaskId());
+        System.out.println("\nСписок эпиков ПОСЛЕ удаления epic2:");
+        System.out.println(taskManager.getEpics());
+        System.out.println("\nСписок подзадач ПОСЛЕ удаления epic2");
         System.out.println(taskManager.getSubTasks());
+        System.out.println(taskManager.getSubTasks(epic2));
 
     }
 }
