@@ -16,13 +16,13 @@ class TaskTest {
     private TaskManager taskManager;
 
     @BeforeEach
-    public void  addTask(){
+    public void addTask() {
         taskManager = Managers.getDefault();
     }
 
     @Test
     @DisplayName("экземпляры класса Task равны друг другу, если равен их id")
-    public  void shouldTwoTasksEqualsIdAreEquals(){
+    public void shouldTwoTasksEqualsIdAreEquals() {
         Task task1 = new Task("новая задача", "описание", Status.NEW);
         taskManager.createTask(task1);
         final int id = task1.getTaskId();
@@ -39,4 +39,4 @@ class TaskTest {
         assertEquals(1, tasks.size(), "неверное количество задач");
         assertEquals(task1, tasks.get(0));
     }
-    }
+}

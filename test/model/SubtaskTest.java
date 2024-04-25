@@ -16,20 +16,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DisplayName("Subtask")
-class SubtaskTest{
+class SubtaskTest {
     private TaskManager taskManager;
 
     @BeforeEach
-    public void addTask(){
+    public void addTask() {
         taskManager = Managers.getDefault();
     }
 
     @Test
     @DisplayName("наследники класса Task равны друг другу, если равен их id")
-    public void shouldEqualsSubtasks(){
+    public void shouldEqualsSubtasks() {
         Epic epic = new Epic("новый эпик", "описание");
         taskManager.createEpic(epic);
-        Subtask subtask1 = new Subtask("новая подзадача", "описание", Status.NEW, epic );
+        Subtask subtask1 = new Subtask("новая подзадача", "описание", Status.NEW, epic);
         taskManager.createSubTask(subtask1);
         final int id = subtask1.getTaskId();
 
@@ -41,6 +41,6 @@ class SubtaskTest{
         final List<Subtask> subtaskList = taskManager.getSubTasks();
 
         assertNotNull(subtask1, "задачи не возвращаются!");
-        assertEquals(1, subtaskList.size(), "неверное количество задач." );
+        assertEquals(1, subtaskList.size(), "неверное количество задач.");
     }
 }

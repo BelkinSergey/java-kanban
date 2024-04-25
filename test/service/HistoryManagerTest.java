@@ -17,7 +17,7 @@ class HistoryManagerTest {
     private TaskManager taskManager;
 
     @BeforeEach
-    public void addTask(){
+    public void addTask() {
 //        historyManager = Managers.getDefaultHistory();
         taskManager = new InMemoryTaskManager();
     }
@@ -25,15 +25,15 @@ class HistoryManagerTest {
 
     @Test
     @DisplayName("добавляемые в HistoryManager задачи сохраняют предыдущую версию задачи")
-    public void shouldSavedAllVersionTasks(){
+    public void shouldSavedAllVersionTasks() {
         Task task = new Task("Task", "Desc", Status.NEW);
         taskManager.createTask(task);
-        taskManager.getTaskOfId(task.getTaskId());
+        taskManager.getTask(task.getTaskId());
 
         Task taskUpdate = new Task(task.getTaskId(), "Task update", "Desc update", Status.IN_PROGRESS);
         taskManager.updateTask(taskUpdate);
 
-        taskManager.getTaskOfId(task.getTaskId());
+        taskManager.getTask(task.getTaskId());
 
         final List<Task> history = taskManager.getHistory();
 
@@ -41,6 +41,7 @@ class HistoryManagerTest {
         assertEquals(2, history.size(), "история из двух тасков.");
         assertEqualsTask(history.get(0), history.get(1), "таски не совпадают по");
     }
+
     private void assertEqualsTask(Task expected, Task task, String message) {
         Boolean isNotEquals = expected.getTaskId() != task.getTaskId() ||
                 !expected.getTaskName().equals(task.getTaskName()) ||

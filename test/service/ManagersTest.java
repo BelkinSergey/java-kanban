@@ -16,15 +16,14 @@ class ManagersTest {
     private TaskManager taskManager;
 
 
-
     @BeforeEach
-    public void addTask(){
+    public void addTask() {
         taskManager = Managers.getDefault();
     }
 
-@Test
-@DisplayName("утилитарный класс всегда возвращает проинициализированные и готовые к работе экземпляры")
-    public void shouldInitializedInstancesNotNull(){
+    @Test
+    @DisplayName("утилитарный класс всегда возвращает проинициализированные и готовые к работе экземпляры")
+    public void shouldInitializedInstancesNotNull() {
         assertNotNull(taskManager, "экземпляр класса не проинициализирован");
     }
 
@@ -45,13 +44,13 @@ class ManagersTest {
         assertEquals(1, taskManager.getEpics().size(), "количество задач не совпадает");
         assertEquals(1, taskManager.getSubTasks().size(), "количество задач не совпадает");
 
-        assertNotNull(taskManager.getTaskOfId(1), "задача не найдена");
-        assertNotNull(taskManager.getEpicTaskOfId(2), "задача не найдена");
-        assertNotNull(taskManager.getSubTaskOfId(3), "задача не найдена");
+        assertNotNull(taskManager.getTask(1), "задача не найдена");
+        assertNotNull(taskManager.getEpicTask(2), "задача не найдена");
+        assertNotNull(taskManager.getSubTask(3), "задача не найдена");
 
-        assertEquals(task, taskManager.getTaskOfId(1), "задачи не совпадают");
-        assertEquals(epic, taskManager.getEpicTaskOfId(2), "задачи не совпадают");
-        assertEquals(subtask, taskManager.getSubTaskOfId(3), "задачи не совпадают");
+        assertEquals(task, taskManager.getTask(1), "задачи не совпадают");
+        assertEquals(epic, taskManager.getEpicTask(2), "задачи не совпадают");
+        assertEquals(subtask, taskManager.getSubTask(3), "задачи не совпадают");
     }
 
     @Test
@@ -75,7 +74,7 @@ class ManagersTest {
     public void shouldTasksUnchangedWhenAddingToInMemoryTaskManager() {
         Task task = new Task("новая задача", "описание", Status.NEW);
         taskManager.createTask(task);
-        Task task1 = taskManager.getTaskOfId(1);
+        Task task1 = taskManager.getTask(1);
 
         assertEquals(task.getTaskName(), task1.getTaskName(), "поля не совпадают");
         assertEquals(task.getDescription(), task1.getDescription(), "поля не совпадают");

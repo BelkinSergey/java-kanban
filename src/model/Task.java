@@ -5,6 +5,7 @@ public class Task {
     private String taskName;
     private String description;
     private Status taskStatus;
+
     public Task(int taskId, String taskName, String description, Status taskStatus) {
         this.id = taskId;
         this.taskName = taskName;

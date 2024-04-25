@@ -26,11 +26,11 @@ public interface TaskManager {
     void clearSubTasks();
 
     // Получение по идентификатору
-    Task getTaskOfId(int id);
+    Task getTask(int id);
 
-    Epic getEpicTaskOfId(int id);
+    Epic getEpicTask(int id);
 
-    Subtask getSubTaskOfId(int id);
+    Subtask getSubTask(int id);
 
     // Создание задачи
     Task createTask(Task task);
