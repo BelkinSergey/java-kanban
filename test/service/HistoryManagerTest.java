@@ -1,6 +1,8 @@
 package service;
 
+import model.Epic;
 import model.Status;
+import model.Subtask;
 import model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,41 +17,61 @@ class HistoryManagerTest {
 
     private HistoryManager historyManager;
     private TaskManager taskManager;
+    Task task1, task2;
+
+    Epic epic1, epic2;
+    Subtask subtask1, subtask2, subtask3;
 
     @BeforeEach
     public void addTask() {
 //        historyManager = Managers.getDefaultHistory();
         taskManager = new InMemoryTaskManager();
+        task1 = taskManager.createTask(new Task("Task 1", "Desc 1", Status.NEW));
+        task2 = taskManager.createTask(new Task("Task 2", "Desc 2", Status.IN_PROGRESS));
+        epic1 = taskManager.createEpic(new Epic("Epic 1", "Desc epic 1"));
+        subtask1 = taskManager.createSubTask(new Subtask("SubTask 1", "Desc sub 1", Status.NEW, epic1));
+        subtask2 = taskManager.createSubTask(new Subtask("SubTask 2", "Desc sub 2", Status.NEW, epic1));
+        epic2 = taskManager.createEpic(new Epic("Epic 2", "Desc epic 2"));
+        subtask3 = taskManager.createSubTask(new Subtask("SubTask 3", "Desc sub 3", Status.NEW, epic1));
+
+        taskManager.getTask(1);
+        taskManager.getEpicTask(3);
+        taskManager.getSubTask(4);
+        taskManager.getSubTask(7);
+        taskManager.getEpicTask(3);
     }
 
 
     @Test
-    @DisplayName("добавляемые в HistoryManager задачи сохраняют предыдущую версию задачи")
-    public void shouldSavedAllVersionTasks() {
-        Task task = new Task("Task", "Desc", Status.NEW);
-        taskManager.createTask(task);
-        taskManager.getTask(task.getTaskId());
-
-        Task taskUpdate = new Task(task.getTaskId(), "Task update", "Desc update", Status.IN_PROGRESS);
-        taskManager.updateTask(taskUpdate);
-
-        taskManager.getTask(task.getTaskId());
-
-        final List<Task> history = taskManager.getHistory();
-
-        assertNotNull(history, "история пустая.");
-        assertEquals(2, history.size(), "история из двух тасков.");
-        assertEqualsTask(history.get(0), history.get(1), "таски не совпадают по");
+    @DisplayName("просматриваемые задачи добавляются в конец истории HistoryManager, предыдущая версия удаляется")
+    public void shouldSavedNewVersionTasks() {
+        final List<Task> history = List.of(task1, subtask1, subtask3, epic1);
+        assertEquals(taskManager.getHistory(), history, "истории не совпадают");
     }
 
-    private void assertEqualsTask(Task expected, Task task, String message) {
-        Boolean isNotEquals = expected.getTaskId() != task.getTaskId() ||
-                !expected.getTaskName().equals(task.getTaskName()) ||
-                !expected.getDescription().equals(task.getDescription()) ||
-                !expected.getTaskStatus().equals(task.getTaskStatus());
-
-        assertTrue(isNotEquals, "Tasks equals");
-
+    @Test
+    @DisplayName("Удаление задачи из начала истории HistoryManager")
+    public void shouldDeleteTaskFirst() {
+        taskManager.deleteTaskID(1);
+        final List<Task> history = List.of(subtask1, subtask3, epic1);
+        assertEquals(taskManager.getHistory(), history, "истории не совпадают");
     }
+
+    @Test
+    @DisplayName("Удаление задачи из середины истории HistoryManager")
+    public void shouldDeleteTaskMiddle() {
+        taskManager.deleteTaskID(7);
+        final List<Task> history = List.of(task1, subtask1, epic1);
+        assertEquals(taskManager.getHistory(), history, "истории не совпадают");
+    }
+
+    @Test
+    @DisplayName("Удаление задачи из конца истории HistoryManager")
+    public void shouldDeleteTaskEnd() {
+        taskManager.deleteTaskID(3);
+        final List<Task> history = List.of(task1);
+        assertEquals(taskManager.getHistory(), history, "истории не совпадают");
+    }
+
 
 }
