@@ -24,7 +24,7 @@ class HistoryManagerTest {
 
     @BeforeEach
     public void addTask() {
-//        historyManager = Managers.getDefaultHistory();
+
         taskManager = new InMemoryTaskManager();
         task1 = taskManager.createTask(new Task("Task 1", "Desc 1", Status.NEW));
         task2 = taskManager.createTask(new Task("Task 2", "Desc 2", Status.IN_PROGRESS));
