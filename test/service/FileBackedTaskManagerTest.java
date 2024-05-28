@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,9 +19,9 @@ class FileBackedTaskManagerTest {
     FileBackedTaskManager taskManager;
 
     @BeforeEach
-    public void beforeEach() {
-        file = new File("resources/tasks.csv");
-        taskManager = Managers.getDefaultFileBackedTaskManager();
+    public void beforeEach() throws IOException {
+        file = File.createTempFile("tasks", ".csv", null);
+        taskManager = new FileBackedTaskManager(file);
         Task task1 = taskManager.createTask(new Task("Task 1", "Desc 1", Status.NEW));
         Epic epic1 = taskManager.createEpic(new Epic("Epic 1", "Desc epic 1 "));
         Subtask subtask1 = taskManager.createSubTask(new Subtask("SubTask 1", "Desc sub 1", Status.NEW, epic1));
