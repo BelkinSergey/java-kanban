@@ -44,7 +44,7 @@ public class Task {
     }
 
 
-    public int getTaskId() {
+    public int getId() {
         return id;
     }
 
@@ -52,6 +52,9 @@ public class Task {
         this.id = taskId;
     }
 
+    public Task getTask() {
+        return this;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -67,5 +70,13 @@ public class Task {
                 "name: '" + taskName + "'" +
                 ", status: '" + taskStatus + "'" +
                 ", description: '" + description + "'}";
+    }
+
+    public TypeOfTask getType() {
+        return TypeOfTask.TASK;
+    }
+
+    public Integer getEpicId() {
+        return null;
     }
 }

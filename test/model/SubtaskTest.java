@@ -1,9 +1,5 @@
 package model;
 
-import model.Epic;
-import model.Status;
-import model.Subtask;
-import model.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,9 +27,9 @@ class SubtaskTest {
         taskManager.createEpic(epic);
         Subtask subtask1 = new Subtask("новая подзадача", "описание", Status.NEW, epic);
         taskManager.createSubTask(subtask1);
-        final int id = subtask1.getTaskId();
+        final int id = subtask1.getId();
 
-        Subtask subtask2 = new Subtask(id, "новая подзадача2", "описание2", Status.IN_PROGRESS, epic);
+        Subtask subtask2 = new Subtask(id, "новая подзадача2", "описание2", Status.IN_PROGRESS, epic.getEpicId());
         taskManager.updateSubTask(subtask2);
 
         assertEquals(subtask1, subtask2, "задачи не совпадают!");

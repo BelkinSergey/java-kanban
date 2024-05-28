@@ -33,7 +33,7 @@ class EpicTest {
     }
 
     private void assertEqualsTask(Task expected, Task task, String message) {
-        assertEquals(expected.getTaskId(), task.getTaskId(), message + " id");
+        assertEquals(expected.getId(), task.getId(), message + " id");
         assertEquals(expected.getTaskName(), task.getTaskName(), message + " name");
         assertEquals(expected.getDescription(), task.getDescription(), message + " description");
     }
