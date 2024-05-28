@@ -29,7 +29,7 @@ class SubtaskTest {
         taskManager.createSubTask(subtask1);
         final int id = subtask1.getId();
 
-        Subtask subtask2 = new Subtask(id, "новая подзадача2", "описание2", Status.IN_PROGRESS, epic.getEpicId());
+        Subtask subtask2 = new Subtask(id, "новая подзадача2", "описание2", Status.IN_PROGRESS, epic.getId());
         taskManager.updateSubTask(subtask2);
 
         assertEquals(subtask1, subtask2, "задачи не совпадают!");
