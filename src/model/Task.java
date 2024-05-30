@@ -52,9 +52,6 @@ public class Task {
         this.id = taskId;
     }
 
-    public Task getTask() {
-        return this;
-    }
 
     @Override
     public boolean equals(Object obj) {
