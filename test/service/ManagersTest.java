@@ -79,7 +79,7 @@ class ManagersTest {
         assertEquals(task.getTaskName(), task1.getTaskName(), "поля не совпадают");
         assertEquals(task.getDescription(), task1.getDescription(), "поля не совпадают");
         assertEquals(task.getTaskStatus(), task1.getTaskStatus(), "поля не совпадают");
-        assertEquals(task.getTaskId(), task1.getTaskId(), "поля не совпадают");
+        assertEquals(task.getId(), task1.getId(), "поля не совпадают");
     }
 }
 

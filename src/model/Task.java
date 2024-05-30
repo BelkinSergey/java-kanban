@@ -44,7 +44,7 @@ public class Task {
     }
 
 
-    public int getTaskId() {
+    public int getId() {
         return id;
     }
 
@@ -67,5 +67,13 @@ public class Task {
                 "name: '" + taskName + "'" +
                 ", status: '" + taskStatus + "'" +
                 ", description: '" + description + "'}";
+    }
+
+    public TypeOfTask getType() {
+        return TypeOfTask.TASK;
+    }
+
+    public Integer getEpicId() {
+        return null;
     }
 }

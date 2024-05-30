@@ -25,7 +25,7 @@ class TaskTest {
     public void shouldTwoTasksEqualsIdAreEquals() {
         Task task1 = new Task("новая задача", "описание", Status.NEW);
         taskManager.createTask(task1);
-        final int id = task1.getTaskId();
+        final int id = task1.getId();
 
         Task task2 = new Task(id, "новая задача2", "описание2", Status.IN_PROGRESS);
         taskManager.updateTask(task2);

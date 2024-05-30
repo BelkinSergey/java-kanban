@@ -10,17 +10,21 @@ public class Epic extends Task {
         super(taskName, description, Status.NEW);
     }
 
+    public Epic(Integer id, String taskName, String description) {
+        super(id, taskName, description, Status.NEW);
+    }
+
     public ArrayList<Subtask> getSubtasks() {
         return new ArrayList<Subtask>(subtasks.values());
     }
 
     public void addTask(Subtask subtask) {
-        subtasks.put(subtask.getTaskId(), subtask);
+        subtasks.put(subtask.getId(), subtask);
         updateStatus();
     }
 
     public void removeTask(Subtask subtask) {
-        subtasks.remove(subtask.getTaskId());
+        subtasks.remove(subtask.getId());
         updateStatus();
     }
 
@@ -48,5 +52,10 @@ public class Epic extends Task {
             return;
         }
         setTaskStatus(Status.IN_PROGRESS);
+    }
+
+    @Override
+    public TypeOfTask getType() {
+        return TypeOfTask.EPIC;
     }
 }
