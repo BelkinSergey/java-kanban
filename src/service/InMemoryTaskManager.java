@@ -109,6 +109,7 @@ public class InMemoryTaskManager implements TaskManager {
         }
         return null;
     }
+
     private boolean checkTasksOverlap(Task task, Task existTask) {
         return !(task.getStartTime().isAfter(existTask.getEndTime()) || task.getEndTime().isBefore(existTask.getStartTime()));
     }
@@ -229,7 +230,7 @@ public class InMemoryTaskManager implements TaskManager {
         return new ArrayList<>(epic.getSubtasks());
     }
 
-    public void updateEpicInfo(Epic epic){
+    public void updateEpicInfo(Epic epic) {
         LocalDateTime minTime = LocalDateTime.MAX;
         LocalDateTime maxTime = LocalDateTime.MIN;
         Duration duration = Duration.ofMinutes(0);
