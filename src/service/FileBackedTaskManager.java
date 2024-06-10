@@ -1,16 +1,18 @@
 package service;
 
-import exceptions.ManagerSaveException;
+import exceptions.ManagerIOException;
 import model.Epic;
 import model.Subtask;
 import model.Task;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.nio.file.StandardOpenOption.*;
+import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
@@ -36,7 +38,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         try {
             Files.writeString(file.toPath(), textToFile, CREATE, TRUNCATE_EXISTING);
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка сохранения файла: " + e.getMessage());
+            throw new ManagerIOException("Ошибка сохранения файла: " + e.getMessage());
         }
     }
 
@@ -70,7 +72,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
             }
             fileBackedTaskManager.id = maxId;
         } catch (IOException e) {
-            throw new ManagerSaveException("Ошибка чтения файла: " + e.getMessage());
+            throw new ManagerIOException("Ошибка чтения файла: " + e.getMessage());
         }
         return fileBackedTaskManager;
     }

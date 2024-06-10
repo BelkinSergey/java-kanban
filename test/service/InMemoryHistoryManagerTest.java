@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,13 +27,18 @@ class InMemoryHistoryManagerTest {
     public void addTask() {
 
         taskManager = new InMemoryTaskManager();
-        task1 = taskManager.createTask(new Task("Task 1", "Desc 1", Status.NEW));
-        task2 = taskManager.createTask(new Task("Task 2", "Desc 2", Status.IN_PROGRESS));
+        task1 = taskManager.createTask(new Task("Task 1", "Desc 1", Status.NEW,
+                Duration.ofMinutes(3), LocalDateTime.of(2024, 6, 10, 11, 0)));
+        task2 = taskManager.createTask(new Task("Task 2", "Desc 2", Status.IN_PROGRESS,
+                Duration.ofMinutes(3), LocalDateTime.of(2024, 6, 10, 11, 5)));
         epic1 = taskManager.createEpic(new Epic("Epic 1", "Desc epic 1"));
-        subtask1 = taskManager.createSubTask(new Subtask("SubTask 1", "Desc sub 1", Status.NEW, epic1));
-        subtask2 = taskManager.createSubTask(new Subtask("SubTask 2", "Desc sub 2", Status.NEW, epic1));
+        subtask1 = taskManager.createSubTask(new Subtask("SubTask 1", "Desc sub 1", Status.NEW, epic1,
+                Duration.ofMinutes(3), LocalDateTime.of(2024, 6, 10, 11, 10)));
+        subtask2 = taskManager.createSubTask(new Subtask("SubTask 2", "Desc sub 2", Status.NEW, epic1,
+                Duration.ofMinutes(3), LocalDateTime.of(2024, 6, 10, 11, 15)));
         epic2 = taskManager.createEpic(new Epic("Epic 2", "Desc epic 2"));
-        subtask3 = taskManager.createSubTask(new Subtask("SubTask 3", "Desc sub 3", Status.NEW, epic1));
+        subtask3 = taskManager.createSubTask(new Subtask("SubTask 3", "Desc sub 3", Status.NEW, epic1,
+                Duration.ofMinutes(3), LocalDateTime.of(2024, 6, 10, 11, 20)));
 
         taskManager.getTask(1);
         taskManager.getEpicTask(3);

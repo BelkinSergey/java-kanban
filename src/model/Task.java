@@ -1,23 +1,69 @@
 package model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 public class Task {
     private int id;
     private String taskName;
+
     private String description;
+    private Duration duration;
+    private LocalDateTime startTime;
     private Status taskStatus;
 
-    public Task(int taskId, String taskName, String description, Status taskStatus) {
-        this.id = taskId;
+
+    public Task(String taskName, String description, Status taskStatus, Duration duration, LocalDateTime startTime) {
         this.taskName = taskName;
         this.description = description;
         this.taskStatus = taskStatus;
+        this.duration = duration;
+        this.startTime = startTime;
     }
 
-    public Task(String taskName, String description, Status taskStatus) {
+    public Task(int id, String taskName, String description, Status taskStatus, Duration duration, LocalDateTime startTime) {
+        this.id = id;
         this.taskName = taskName;
         this.description = description;
         this.taskStatus = taskStatus;
+        this.duration = duration;
+        this.startTime = startTime;
     }
+
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return startTime.plusMinutes(duration.toMinutes());
+    }
+
+//    public Task(int taskId, String taskName, String description, Status taskStatus) {
+//        this.id = taskId;
+//        this.taskName = taskName;
+//        this.description = description;
+//        this.taskStatus = taskStatus;
+//    }
+
+//    public Task(String taskName, String description, Status taskStatus) {
+//        this.taskName = taskName;
+//        this.description = description;
+//        this.taskStatus = taskStatus;
+//    }
 
     public String getTaskName() {
         return taskName;
@@ -66,7 +112,9 @@ public class Task {
         return "Task {" +
                 "name: '" + taskName + "'" +
                 ", status: '" + taskStatus + "'" +
-                ", description: '" + description + "'}";
+                ", description: '" + description + "'" +
+                ", duration: " + duration.toMinutes() + " min" +
+                ", startTime: " + startTime + '}';
     }
 
     public TypeOfTask getType() {
