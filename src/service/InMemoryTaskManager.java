@@ -18,11 +18,11 @@ public class InMemoryTaskManager implements TaskManager {
 
     protected int id = 0;
 
-    public ArrayList<Task> getPriorityTasks() {
-        return new ArrayList<>(priorityTasks);
-    }
-
     protected TreeSet<Task> priorityTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
+
+    public TreeSet<Task> getPriorityTasks() {
+        return new TreeSet<>(priorityTasks);
+    }
 
     private final HistoryManager historyManager = Managers.getDefaultHistory();
 
@@ -115,7 +115,7 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     private void checkTaskTime(Task task) {
-        List<Task> priorityTasks = getPriorityTasks();
+        TreeSet<Task> priorityTasks = getPriorityTasks();
         priorityTasks.stream()
                 .filter(existTask -> existTask.getId() != task.getId())
                 .filter(existTask -> checkTasksOverlap(task, existTask))
