@@ -1,17 +1,46 @@
 package model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Epic extends Task {
+    private LocalDateTime endTime;
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
 
     public Epic(String taskName, String description) {
-        super(taskName, description, Status.NEW);
+        super(taskName, description, Status.NEW, Duration.ZERO, LocalDateTime.now());
     }
 
     public Epic(Integer id, String taskName, String description) {
-        super(id, taskName, description, Status.NEW);
+        super(id, taskName, description, Status.NEW, Duration.ZERO, LocalDateTime.now());
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+//        Optional<Subtask> endTime;
+//        try {
+//            endTime = subtasks.values().stream().max(Comparator.comparing(Task::getEndTime));
+//}catch (NotFoundException ex){
+//    new NotFoundException(ex);
+//}
+//
+        return endTime;
+    }
+
+    @Override
+    public void setStartTime(LocalDateTime startTime) {
+        super.setStartTime(startTime);
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    @Override
+    public void setDuration(Duration duration) {
+        super.setDuration(duration);
     }
 
     public ArrayList<Subtask> getSubtasks() {
@@ -25,6 +54,11 @@ public class Epic extends Task {
 
     public void removeTask(Subtask subtask) {
         subtasks.remove(subtask.getId());
+        updateStatus();
+    }
+
+    public void removeSybtasks() {
+        subtasks.clear();
         updateStatus();
     }
 
@@ -53,6 +87,7 @@ public class Epic extends Task {
         }
         setTaskStatus(Status.IN_PROGRESS);
     }
+
 
     @Override
     public TypeOfTask getType() {
