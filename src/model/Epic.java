@@ -17,6 +17,10 @@ public class Epic extends Task {
         super(id, taskName, description, Status.NEW, Duration.ZERO, LocalDateTime.now());
     }
 
+    public Epic(String taskName, String description, Duration duration, LocalDateTime localDateTime) {
+        super(taskName, description, Status.NEW, duration, localDateTime);
+    }
+
     @Override
     public LocalDateTime getEndTime() {
 //        Optional<Subtask> endTime;

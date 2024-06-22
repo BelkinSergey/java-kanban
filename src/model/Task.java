@@ -52,18 +52,6 @@ public class Task {
         return startTime.plusMinutes(duration.toMinutes());
     }
 
-//    public Task(int taskId, String taskName, String description, Status taskStatus) {
-//        this.id = taskId;
-//        this.taskName = taskName;
-//        this.description = description;
-//        this.taskStatus = taskStatus;
-//    }
-
-//    public Task(String taskName, String description, Status taskStatus) {
-//        this.taskName = taskName;
-//        this.description = description;
-//        this.taskStatus = taskStatus;
-//    }
 
     public String getTaskName() {
         return taskName;
