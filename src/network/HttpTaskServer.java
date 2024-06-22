@@ -9,7 +9,7 @@ import java.net.InetSocketAddress;
 
 
 public class HttpTaskServer {
-    private final int PORT = 8080;
+    private final int port = 8080;
     private final TaskManager taskManager;
 
     private HttpServer server;
@@ -21,9 +21,9 @@ public class HttpTaskServer {
 
     public void start() {
         try {
-            server = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
+            server = HttpServer.create(new InetSocketAddress("localhost", port), 0);
             server.start();
-            System.out.println("Сервер запущен " + PORT);
+            System.out.println("Сервер запущен " + port);
             server.createContext("/tasks", new TaskHandler(taskManager));
             server.createContext("/epics", new EpicHandler(taskManager));
             server.createContext("/subtasks", new SubTaskHandler(taskManager));
@@ -36,6 +36,6 @@ public class HttpTaskServer {
 
     public void stop() {
         server.stop(0);
-        System.out.println("Сервер остановлен " + PORT);
+        System.out.println("Сервер остановлен " + port);
     }
 }
