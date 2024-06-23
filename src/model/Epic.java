@@ -23,13 +23,7 @@ public class Epic extends Task {
 
     @Override
     public LocalDateTime getEndTime() {
-//        Optional<Subtask> endTime;
-//        try {
-//            endTime = subtasks.values().stream().max(Comparator.comparing(Task::getEndTime));
-//}catch (NotFoundException ex){
-//    new NotFoundException(ex);
-//}
-//
+
         return endTime;
     }
 

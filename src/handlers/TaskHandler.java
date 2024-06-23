@@ -20,16 +20,17 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
     public void handle(HttpExchange httpExchange) {
         try (httpExchange) {
             try {
+                int process = processRequest(httpExchange);
                 switch (httpExchange.getRequestMethod()) {
                     case "GET":
-                        if (processRequest(httpExchange) == 0) {
+                        if (process == 0) {
                             sendText(httpExchange, getGson().toJson(taskManager.getTasks()), 200);
                             break;
-                        } else if (processRequest(httpExchange) == 1) {
+                        } else if (process == 1) {
                             sendText(httpExchange, getGson().toJson(taskManager.getTask(getIdFromPath(httpExchange))), 200);
                             break;
                         }
-                        if (processRequest(httpExchange) == 1 && getIdFromPath(httpExchange) == -1) {
+                        if (process == 1 && getIdFromPath(httpExchange) == -1) {
                             sendText(httpExchange, "Такой задачи нет", 404);
                             break;
                         }
@@ -56,11 +57,11 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
                             break;
                         }
                     case "DELETE":
-                        if (processRequest(httpExchange) == 0) {
+                        if (process == 0) {
                             taskManager.clearTasks();
                             sendText(httpExchange, "Задачи удалены", 200);
                             break;
-                        } else if (processRequest(httpExchange) == 1) {
+                        } else if (process == 1) {
                             if (getIdFromPath(httpExchange) == -1) {
                                 sendText(httpExchange, "Такой задачи нет", 404);
                             } else
@@ -79,4 +80,3 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
         }
     }
 }
-

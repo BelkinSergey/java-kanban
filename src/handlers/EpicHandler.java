@@ -20,20 +20,21 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) {
         try (httpExchange) {
+            int process = processRequest(httpExchange);
             try {
                 switch (httpExchange.getRequestMethod()) {
                     case "GET":
-                        if (processRequest(httpExchange) == 0) {
+                        if (process == 0) {
                             sendText(httpExchange, getGson().toJson(taskManager.getEpics()), 200);
                             break;
-                        } else if (processRequest(httpExchange) == 1) {
+                        } else if (process == 1) {
                             sendText(httpExchange, getGson().toJson(taskManager.getEpicTask(getIdFromPath(httpExchange))), 200);
                             break;
-                        } else if (processRequest(httpExchange) == -1) {
+                        } else if (process == -1) {
                             sendText(httpExchange, getGson().toJson(taskManager.getSubTasks(taskManager.getEpicTask(getIdFromPath(httpExchange)))), 200);
                             break;
                         }
-                        if (processRequest(httpExchange) == 1 && getIdFromPath(httpExchange) == -1) {
+                        if (process == 1 && getIdFromPath(httpExchange) == -1) {
                             sendText(httpExchange, "Такой задачи нет", 404);
                             break;
                         }
@@ -60,16 +61,16 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
                             break;
                         }
                     case "DELETE":
-                        if (processRequest(httpExchange) == 0) {
+                        if (process == 0) {
                             taskManager.clearEpics();
                             sendText(httpExchange, "Задачи удалены", 200);
                             break;
-                        } else if (processRequest(httpExchange) == 1) {
+                        } else if (process == 1) {
                             taskManager.deleteTaskID(getIdFromPath(httpExchange));
                             sendText(httpExchange, "задача удалена", 200);
                             break;
                         }
-                        if (processRequest(httpExchange) == 1 && getIdFromPath(httpExchange) == -1) {
+                        if (process == 1 && getIdFromPath(httpExchange) == -1) {
                             sendText(httpExchange, "Такой задачи нет", 404);
                             break;
                         }

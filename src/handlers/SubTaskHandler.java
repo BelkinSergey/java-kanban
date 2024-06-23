@@ -19,59 +19,60 @@ public class SubTaskHandler extends BaseHttpHandler implements HttpHandler {
     }
 
     @Override
-    public void handle(HttpExchange exchange) {
-        try (exchange) {
+    public void handle(HttpExchange httpExchange) {
+        try (httpExchange) {
             try {
-                switch (exchange.getRequestMethod()) {
+                int process = processRequest(httpExchange);
+                switch (httpExchange.getRequestMethod()) {
                     case "GET":
-                        if (processRequest(exchange) == 0) {
-                            sendText(exchange, getGson().toJson(taskManager.getSubTasks()), 200);
+                        if (process == 0) {
+                            sendText(httpExchange, getGson().toJson(taskManager.getSubTasks()), 200);
                             break;
-                        } else if (processRequest(exchange) == 1) {
-                            sendText(exchange, getGson().toJson(taskManager.getSubTask(getIdFromPath(exchange))), 200);
+                        } else if (process == 1) {
+                            sendText(httpExchange, getGson().toJson(taskManager.getSubTask(getIdFromPath(httpExchange))), 200);
                             break;
                         }
-                        if (processRequest(exchange) == 1 && getIdFromPath(exchange) == -1) {
-                            sendText(exchange, "Такой задачи нет", 404);
+                        if (process == 1 && getIdFromPath(httpExchange) == -1) {
+                            sendText(httpExchange, "Такой задачи нет", 404);
                             break;
                         }
                     case "POST":
                         Subtask subTask;
                         try {
-                            String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
+                            String body = new String(httpExchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
                             subTask = getGson().fromJson(body, Subtask.class);
                         } catch (JsonSyntaxException exception) {
-                            sendText(exchange, "Получен некорректный JSON", 400);
+                            sendText(httpExchange, "Получен некорректный JSON", 400);
                             break;
                         }
                         try {
                             if (checkTaskOverlap(subTask)) {
                                 taskManager.updateSubTask(subTask);
-                                sendText(exchange, "Задача обновлена", 201);
+                                sendText(httpExchange, "Задача обновлена", 201);
                                 break;
                             } else
                                 taskManager.createSubTask(subTask);
-                            sendText(exchange, "Задача добавлена", 201);
+                            sendText(httpExchange, "Задача добавлена", 201);
                             break;
                         } catch (ValidationException e) {
-                            sendText(exchange, "Задача пересекается с существующей", 406);
+                            sendText(httpExchange, "Задача пересекается с существующей", 406);
                             break;
                         }
                     case "DELETE":
-                        if (processRequest(exchange) == 0) {
+                        if (process == 0) {
                             taskManager.clearSubTasks();
-                            sendText(exchange, "Задачи удалены", 200);
+                            sendText(httpExchange, "Задачи удалены", 200);
                             break;
-                        } else if (processRequest(exchange) == 1) {
-                            if (getIdFromPath(exchange) == -1) {
-                                sendText(exchange, "Такой задачи нет", 404);
+                        } else if (process == 1) {
+                            if (getIdFromPath(httpExchange) == -1) {
+                                sendText(httpExchange, "Такой задачи нет", 404);
                             } else
-                                taskManager.deleteTaskID(getIdFromPath(exchange));
-                            sendText(exchange, "задача удалена", 200);
+                                taskManager.deleteTaskID(getIdFromPath(httpExchange));
+                            sendText(httpExchange, "задача удалена", 200);
                             break;
                         }
                     default:
-                        sendText(exchange, "Введен неверный запрос", 404);
+                        sendText(httpExchange, "Введен неверный запрос", 404);
                         break;
                 }
             } catch (IOException e) {
