@@ -6,6 +6,7 @@ import model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public interface TaskManager {
 
@@ -50,4 +51,6 @@ public interface TaskManager {
     Task deleteTaskID(int id);
 
     ArrayList<Subtask> getSubTasks(Epic epic);
+
+    TreeSet<Task> getPriorityTasks();
 }
